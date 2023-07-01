@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coupon Wheel</title>
+    <style>
+        /* CSS for the coupon wheel */
+        #wheel {
+            width: 200px;
+            height: 200px;
+            background-color: #ff6f69;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        #wheel:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        
+        .slice {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            transition: transform 3s ease-in-out;
+            transform-origin: 100% 50%;
+        }
+        
+        .slice:nth-child(1) {
+            background-color: #ffcc5c;
+            transform: rotate(0deg);
+        }
+        
+        .slice:nth-child(2) {
+            background-color: #ffd700;
+            transform: rotate(60deg);
+        }
+        
+        .slice:nth-child(3) {
+            background-color: #ffcc5c;
+            transform: rotate(120deg);
+        }
+        
+        .slice:nth-child(4) {
+            background-color: #ffd700;
+            transform: rotate(180deg);
+        }
+        
+        .slice:nth-child(5) {
+            background-color: #ffcc5c;
+            transform: rotate(240deg);
+        }
+        
+        .slice:nth-child(6) {
+            background-color: #ffd700;
+            transform: rotate(300deg);
+        }
+        
+        /* CSS for the coupon result */
+        #result {
+            display: none;
+            margin-top: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="wheel"></div>
+    <div id="result"></div>
+    
+    <script>
+        // JavaScript code for the coupon wheel
+        var wheel = document.getElementById("wheel");
+        var result = document.getElementById("result");
+        var spins = 0;
+        var spinning = false;
+        
+        wheel.addEventListener("click", function() {
+            if (!spinning) {
+                spinning = true;
+                spins++;
+                wheel.classList.add("spin");
+                
+                setTimeout(function() {
+                    wheel.classList.remove("spin");
+                    spinning = false;
+                    
+                    if (spins === 1) {
+                        result.textContent = "Try again";
+                    } else if (spins === 2) {
+                        var prizes = ["$10 off", "$20 off", "$50 off", "Free shipping", "25% discount", "50% discount"];
+                        var randomIndex = Math.floor(Math.random() * prizes.length);
+                        result.textContent = "Congratulations! You won " + prizes[randomIndex];
+                    }
+                    
+                    result.style.display = "block";
+                }, 3000); // Change the duration (in milliseconds) to adjust the spinning speed
+            }
+        });
+    </script>
+</body>
+</html>
